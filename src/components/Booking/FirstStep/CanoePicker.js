@@ -2,31 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import { BsPeopleFill } from 'react-icons/bs';
 import { BsFillPersonFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCanoes } from '../../../redux/bookingSlice';
 
-const CanoePicker = ({ pickedCanoes, setPickedCanoes }) => {
+const CanoePicker = () => {
+  const dispatch = useDispatch();
+  const canoes = useSelector((state) => state.booking.canoes);
+
   const handleAddCanoe = () => {
-    setPickedCanoes([...pickedCanoes, 1]);
+    let newCanoes = [...canoes, 1];
+    console.log(newCanoes);
+    dispatch(setCanoes(newCanoes));
   };
   const handleDeleteCanoe = (index) => {
-    let newCanoes = [...pickedCanoes];
+    let newCanoes = [...canoes];
     newCanoes.splice(index, 1);
-    setPickedCanoes(newCanoes);
+    dispatch(setCanoes(newCanoes));
   };
   const handleCanoeTypeSwitch = (type, index) => {
-    let newCanoes = [...pickedCanoes];
+    let newCanoes = [...canoes];
     newCanoes[index] = type;
-    setPickedCanoes(newCanoes);
+    dispatch(setCanoes(newCanoes));
   };
   return (
     <CanoePickerContainer>
       <ColumnNames>
         <span></span>
-        <p>20zł</p>
         <p>30zł</p>
+        <p>40zł</p>
         <span></span>
       </ColumnNames>
-      {pickedCanoes.map((canoe, index) => (
-        <CanoeWrap>
+      {canoes.map((canoe, index) => (
+        <CanoeWrap key={index}>
           <p>{index + 1}</p>
           <CanoeType
             isChecked={canoe === 1 ? 1 : 0}
@@ -55,7 +62,7 @@ export default CanoePicker;
 const CanoePickerContainer = styled.div``;
 const ColumnNames = styled.div`
   display: grid;
-  grid-template-columns: 0.1fr 1fr 1fr 0.1fr;
+  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
   color: ${({ theme }) => theme.primaryDark};
   margin-bottom: -2px;
   > p {
@@ -65,7 +72,7 @@ const ColumnNames = styled.div`
 `;
 const CanoeWrap = styled.div`
   display: grid;
-  grid-template-columns: 0.1fr 1fr 1fr 0.1fr;
+  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
   margin: 2px 0;
   > p {
     display: flex;
@@ -77,10 +84,11 @@ const CanoeWrap = styled.div`
 `;
 const CanoeType = styled.div`
   border: ${({ theme }) => `1px solid ${theme.primaryDark}`};
-  padding: 0.5em 0.5em;
+  padding: 0.75em 0.5em;
   display: flex;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
   background-color: ${({ isChecked, theme }) =>
     isChecked ? theme.secondaryLight : '#fff'};
 `;
@@ -104,8 +112,11 @@ const AddCanoeButton = styled.button`
   font-size: 2em;
   border: none;
   margin-top: 2px;
+  outline: ${({ theme }) => `1px solid ${theme.primaryDark}`};
+  transition: all 0.2s ease-in-out;
   :hover {
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    outline: ${({ theme }) => `1px solid ${theme.primaryDark}`};
+    background-color: ${({ theme }) => theme.secondaryLight};
   }
 `;

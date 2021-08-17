@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Calendar from './Calendar';
 import { format } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBookingDate } from '../../../../redux/bookingSlice';
 
-const DatePicker = ({ pickedDate, setPickedDate }) => {
+const DatePicker = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
+  const dispatch = useDispatch();
+  const date = useSelector((state) => state.booking.date);
 
   const pickDate = (date) => {
-    setPickedDate(format(date, 'yyyy-MM-dd'));
+    dispatch(setBookingDate(format(date, 'yyyy-MM-dd')));
     toggleOpen();
   };
   return (
@@ -16,7 +20,7 @@ const DatePicker = ({ pickedDate, setPickedDate }) => {
       <CalendarWrap isOpen={isOpen}>
         <Calendar pickDate={pickDate} />
       </CalendarWrap>
-      <StyledInput value={pickedDate} readOnly={true} type='text' />
+      <StyledInput value={date} readOnly={true} type='text' />
       <PickerWrap onClick={toggleOpen}>
         <p>Wybierz dzień</p>
       </PickerWrap>
@@ -30,7 +34,7 @@ const DatePickerContainer = styled.div`
   border: 1px solid #00000030;
   display: flex;
   position: relative;
-  /* change font size to manipulate size of picker */
+  margin: 0 auto;
   width: 28em;
 `;
 const CalendarWrap = styled.div`

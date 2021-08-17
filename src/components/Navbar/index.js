@@ -32,6 +32,9 @@ const NavbarContainer = styled.div`
   left: 0;
   right: 0;
   font-family: 'Bahianita', cursive;
+  @media print {
+    visibility: hidden;
+  }
 `;
 const Logo = styled(Link)`
   text-decoration: none;

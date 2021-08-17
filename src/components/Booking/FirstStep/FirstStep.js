@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
 import CanoePicker from './CanoePicker';
 import DatePicker from './DatePicker';
 import TimePicker from './TimePicker';
 import { GiWoodCanoe } from 'react-icons/gi';
 import { BsFillClockFill } from 'react-icons/bs';
 import { BsCalendar } from 'react-icons/bs';
-import { addDays, format } from 'date-fns';
 import styled from 'styled-components';
 import Btn from '../../Btn';
+import { useSelector } from 'react-redux';
 
 const FirstStep = ({ setStep }) => {
-  const [pickedDate, setPickedDate] = useState(
-    format(addDays(new Date(), 1), 'yyyy-MM-dd')
-  );
-  const [pickedTime, setPickedTime] = useState('7:00');
-  const [pickedCanoes, setPickedCanoes] = useState([1]);
-  const [totalPrice, setTotalPrice] = useState(20);
-
-  useEffect(() => {
-    const total = pickedCanoes.reduce((prevValue, currValue) => {
-      const price = currValue === 1 ? 20 : 30;
-      return prevValue + price;
-    }, 0);
-    setTotalPrice(total);
-  }, [pickedCanoes]);
+  const totalPrice = useSelector((state) => state.booking.totalPrice);
 
   return (
     <FormContainer>
@@ -32,20 +18,17 @@ const FirstStep = ({ setStep }) => {
         <CalendarIcon />
         Dzień
       </h3>
-      <DatePicker pickedDate={pickedDate} setPickedDate={setPickedDate} />
+      <DatePicker />
       <h3>
         <ClockIcon />
         Godzina
       </h3>
-      <TimePicker pickedTime={pickedTime} setPickedTime={setPickedTime} />
+      <TimePicker />
       <h3>
         <CanoeIcon />
         Kajaki
       </h3>
-      <CanoePicker
-        pickedCanoes={pickedCanoes}
-        setPickedCanoes={setPickedCanoes}
-      />
+      <CanoePicker />
       <BottomBar>
         <p>Łącznie: {totalPrice} zł</p>
         <Btn onClick={() => setStep(2)}>Dalej</Btn>
@@ -60,6 +43,12 @@ const FormContainer = styled.div`
   background-color: #fff;
   padding: 0.5em 2em 1em 2em;
   border-radius: 0.5rem;
+  @media screen and (max-width: 768px) {
+    min-height: calc(100vh - 4rem);
+    border-radius: 0;
+    padding: 0.5em 0.5em 1em 0.5em;
+    width: 100vw;
+  }
   > h2 {
     text-align: center;
     font-size: 2em;
@@ -89,7 +78,7 @@ const BottomBar = styled.div`
   > p {
     color: ${({ theme }) => theme.secondaryLight};
     padding-left: 1em;
-    font-size: 1.2em;
+    font-size: 1.4em;
   }
 `;
 

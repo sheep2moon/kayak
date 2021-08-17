@@ -9,9 +9,8 @@ const Homepage = () => {
       <HeroSection>
         <h1>Spływy Kajakowe</h1>
         <p>
-          Organizujemy Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Tempore, eligendi. Lorem ipsum, dolor sit amet consectetur adipisicing
-          elit. Natus, quam.
+          Firma KAYAK zajmuje się organizacją spływów kajakowych Dunajcem.
+          Zarezerwuj online przez prosty formularz.
         </p>
         <BtnLink to='rezerwacja'>Rezerwacja</BtnLink>
       </HeroSection>
@@ -38,17 +37,20 @@ const HeroSection = styled.section`
   flex-direction: column;
   align-items: center;
   padding-top: 10em;
+  @media screen and (max-width: 768px) {
+    padding-top: 5em;
+  }
   > h1 {
     text-transform: uppercase;
+    text-align: center;
     font-size: 3em;
     color: #fff;
     border-bottom: ${({ theme }) => `4px solid ${theme.secondaryLight}`};
   }
   > p {
-    text-align: center;
+    margin: 1em 2em 2em 2em;
     font-size: 1.4em;
     color: #fff;
     max-width: 400px;
-    margin-bottom: 2em;
   }
 `;

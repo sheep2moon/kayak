@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { setBookingTime } from '../../../redux/bookingSlice';
 
 const allowedTime = [
   '6:30',
@@ -15,13 +17,20 @@ const allowedTime = [
   '19:00',
 ];
 
-const TimePicker = ({ pickedTime, setPickedTime }) => {
+const TimePicker = () => {
+  const dispatch = useDispatch();
+  const bookingTime = useSelector((state) => state.booking.time);
+
+  const handleTimeChange = (t) => {
+    dispatch(setBookingTime(t));
+  };
   return (
     <TimePickerWrapper>
       {allowedTime.map((time) => (
         <TimeBox
-          onClick={() => setPickedTime(time)}
-          isPicked={pickedTime === time ? 1 : 0}
+          key={time}
+          onClick={() => handleTimeChange(time)}
+          isPicked={bookingTime === time ? 1 : 0}
         >
           {time}
         </TimeBox>
@@ -45,7 +54,9 @@ const TimeBox = styled.span`
   background-color: ${({ theme, isPicked }) =>
     isPicked ? theme.secondaryLight : '#fff'};
   color: ${({ theme }) => theme.primaryDark};
+  transition: all 0.2s ease-in-out;
   :hover {
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
     color: ${({ theme }) => theme.secondaryDark};
   }
