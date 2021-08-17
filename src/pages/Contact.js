@@ -6,6 +6,7 @@ import {
   AiFillFacebook,
   AiOutlineTwitter,
   AiOutlineLike,
+  AiFillGithub,
 } from 'react-icons/ai';
 const Contact = () => {
   return (
@@ -31,6 +32,13 @@ const Contact = () => {
           <AiFillInstagram />
           <AiOutlineTwitter />
         </SocialMediaWrapper>
+        <h5>
+          aplikacja stworzona przez{' '}
+          <a href='https://github.com/sheep2moon/kayak'>
+            <AiFillGithub />
+            konrad iwan{' '}
+          </a>
+        </h5>
       </ContactInfo>
     </ContactContainer>
   );
@@ -62,6 +70,11 @@ const ContactInfo = styled.div`
     > svg {
       margin-right: 0.5em;
     }
+  }
+  > h5 {
+    font-size: 1em;
+    margin-top: 1em;
+    text-align: center;
   }
   > a {
     color: ${({ theme }) => theme.secondaryLight};
