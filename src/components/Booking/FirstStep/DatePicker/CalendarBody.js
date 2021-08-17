@@ -1,6 +1,7 @@
 import {
   addDays,
   differenceInCalendarDays,
+  format,
   getDate,
   getDay,
   isThisMonth,
@@ -9,6 +10,7 @@ import {
 } from 'date-fns';
 import { endOfMonth } from 'date-fns/esm';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 //days labels
@@ -20,7 +22,7 @@ const CalendarBody = ({ currentMonth, pickDate, startFromMonday = true }) => {
     monthStart: null,
     monthEnd: null,
   });
-
+  const date = useSelector((state) => state.booking.date);
   useEffect(() => {
     // 0 - sunday , 6 - monday
     const firstDayDiff = startFromMonday ? 6 : 0;
@@ -67,6 +69,7 @@ const CalendarBody = ({ currentMonth, pickDate, startFromMonday = true }) => {
               <DayCell
                 key={index}
                 isCurrentMonth={isCurrentMonth}
+                isPicked={date === format(day, 'yyyy-MM-dd') ? 1 : 0}
                 isInactive={isInactive}
                 onClick={() => (isInactive ? () => {} : pickDate(day))}
               >
@@ -90,7 +93,8 @@ const ColumnNames = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   box-shadow: 1px 0 2px #000;
-  background-color: ${({ theme }) => theme.secondaryLight};
+  background-color: ${({ theme }) => theme.primaryDark};
+  color: ${({ theme }) => theme.secondaryLight};
 `;
 const ColumnName = styled.p`
   font-size: 1.4em;
@@ -114,7 +118,15 @@ const DayCell = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1em;
-  outline: 1px solid #00000008;
+  background-color: ${(props) =>
+    props.isPicked ? props.theme.secondaryLight : '#fff'};
+  color: ${(props) =>
+    props.isPicked ? props.theme.primaryDark : props.theme.primaryDark};
+  outline: 1px solid #00000016;
+  box-shadow: ${(props) =>
+    props.isPicked
+      ? `inset 0 0 12px 2px ${props.theme.secondaryDark}`
+      : 'none'};
   opacity: ${(props) => (!props.isCurrentMonth ? 0.4 : 1)};
   :hover {
     box-shadow: ${({ theme }) => `inset 0 0 12px 2px ${theme.primaryLight}`};

@@ -42,10 +42,12 @@ const CalendarWrap = styled.div`
   position: absolute;
   z-index: 10;
   top: 3em;
+  outline: 2px solid #000;
 `;
 const StyledInput = styled.input`
   text-align: center;
   font-size: 1.2em;
+  width: 14ch;
   border: none;
 `;
 const PickerWrap = styled.div`
