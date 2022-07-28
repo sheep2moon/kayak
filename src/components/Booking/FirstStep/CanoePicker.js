@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BsPeopleFill } from 'react-icons/bs';
-import { BsFillPersonFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCanoes } from '../../../redux/bookingSlice';
+import React from "react";
+import styled from "styled-components";
+import { BsPeopleFill } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { setCanoes } from "../../../redux/bookingSlice";
 
 const CanoePicker = () => {
   const dispatch = useDispatch();
@@ -14,11 +14,16 @@ const CanoePicker = () => {
     console.log(newCanoes);
     dispatch(setCanoes(newCanoes));
   };
+
   const handleDeleteCanoe = (index) => {
-    let newCanoes = [...canoes];
-    newCanoes.splice(index, 1);
-    dispatch(setCanoes(newCanoes));
+    console.log(canoes);
+    if (canoes.length > 1) {
+      let newCanoes = [...canoes];
+      newCanoes.splice(index, 1);
+      dispatch(setCanoes(newCanoes));
+    }
   };
+
   const handleCanoeTypeSwitch = (type, index) => {
     let newCanoes = [...canoes];
     newCanoes[index] = type;
@@ -90,7 +95,7 @@ const CanoeType = styled.div`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   background-color: ${({ isChecked, theme }) =>
-    isChecked ? theme.secondaryLight : '#fff'};
+    isChecked ? theme.secondaryLight : "#fff"};
 `;
 
 const PersonIcon = styled(BsFillPersonFill)`

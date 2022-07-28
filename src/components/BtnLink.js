@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const BtnLink = ({ linkTo, children, ...rest }) => {
   return (
@@ -20,7 +20,7 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.primaryDark};
   text-decoration: none;
   border: 1px solid #00000030;
-
+  width: fit-content;
   transition: all 0.2s ease-in-out;
   :hover {
     transition: all 0.2s ease-in-out;
